@@ -11,11 +11,11 @@ Training to learn Ruby on Rails development.
 - search book by genre
 
 ## Screenshots
-![](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-![](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![libraries](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![books](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![book](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![user](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![genre](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
 
 # Getting started
 - Start docker (mac): `$ open -a docker`
