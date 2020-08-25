@@ -19,7 +19,7 @@ Training to learn Ruby on Rails development.
 
 # Getting started
 - Start docker (mac): `$ open -a docker`
-- Edit `config/en..' to add your own Google Map API Key [optional]
+- Edit `config/settings.local.yml' to add your own Google Map API Key [optional, see details below]
 - Build images: `$ docker-compose build`
 - Start containers: `$ docker-compose up`
 - Build database ( in another term ): `$ docker-compose run web rake db:create`
