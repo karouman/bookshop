@@ -1,20 +1,17 @@
 FROM ruby:2.6.5
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get install curl \
-    && curl -sL https://deb.nodesource.com/setup_12.x | bash \
-    && apt-get install -y nodejs yarn
-
-WORKDIR /usr/src/app
-COPY Gemfile* ./
-RUN gem install bundler
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN mkdir /bookshop
+WORKDIR /bookshop
+COPY Gemfile /bookshop/Gemfile
+COPY Gemfile.lock /bookshop/Gemfile.lock
 RUN bundle install
-RUN rails db:seed
-COPY . .
+COPY . /bookshop
 
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
+
+# Start the main process.
 CMD ["rails", "server", "-b", "0.0.0.0"]
