@@ -1,0 +1,24 @@
+<div style="float:right;margin-top:20px;"/>
+  <button type="button" class="btn btn-default"><%= link_to 'Back to homepage', welcome_index_path %></button>
+  <button type="button" class="btn btn-primary"><%= link_to 'add new genre', new_genre_path %></button>
+</div>
+<h1>Borrowings</h1>
+
+<div class="row">
+  <div class="col-md-3">User</div>
+  <div class="col-md-3">Book</div>
+  <div class="col-md-3">Returns</div>
+  <div class="col-md-3">Returned</div>
+</div>
+
+
+<% @borrowings.each do |borrowing| %>
+  <div class="row">
+    <div class="col-md-3"><%= borrowing.user.login %></div>
+    <div class="col-md-3"><%= link_to borrowing.book.title, book_path( borrowing.book ) %></div>
+    <div class="col-md-3"><%= borrowing.returns %></div>
+    <div class="col-md-3"><%= borrowing.returned %></div>
+  </div>
+
+<% end %>
+</table>

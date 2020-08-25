@@ -1,0 +1,24 @@
+<h1>Library: <%= @library.name %></h1>
+<strong>Address:</strong>
+<%= @library.address %>
+</p>
+<p>
+<strong>Zipcode:</strong>
+<%= @library.zipcode %>
+</p>
+<p>
+<strong>City:</strong>
+<%= @library.city %>
+</p>
+<h3>Book list</h3>
+<p>
+<% if @library.books.length > 0 %>
+  <ul>
+    <% @library.books.each do |book| %>
+      <li><%= link_to book.title, book_path(book) %></li>
+    <%end%>
+  </ul>
+<% else %>
+  <div class="empty-block">There is no book available for this library.</div>
+<% end %>
+</p>

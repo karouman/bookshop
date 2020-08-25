@@ -1,0 +1,89 @@
+<h1>Listing Libraries</h1>
+ 
+<% if Settings.api && Settings.api.googlemap %>
+<script defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdxcsztd5TOv51XXDFPsT1ZnIlB4NO1sk&callback=initMap">
+</script>
+
+<div id="map" style="width:100%; height:600px;">hello</div>
+
+<script> const markers = []; </script>
+<% end %>
+
+<h3>Libraries list view</h3>
+<div class="row">
+  <div class="col-md-4">Name</div>
+  <div class="col-md-2">Address</div>
+  <div class="col-md-2">Zipcode</div>
+  <div class="col-md-2">City</div>
+</div>
+ 
+<% @libraries.each do |library| %>
+  <tr>
+    <script >
+      if ( markers ) {
+	markers.push( { id: <%= library.id %>,
+	  address: "<%= library.address %> <%= library.zipcode %> <%= library.city %>",
+	  name: "<%= library.name %>",
+	  href: '<%= link_to 'Show books', library_path(library) %>' } );
+	}
+    </script>
+    <div class="row">
+      <div class="col-md-4"><%= library.name %></div>
+      <div class="col-md-2"><%= library.address %></div>
+      <div class="col-md-2"><%= library.zipcode %></div>
+      <div class="col-md-2"><%= library.city %></div>
+      <div class="col-md-2">
+	<%= link_to 'Show books', library_path(library) %>
+      </div>
+    </div>
+  <% end %>
+
+<script>
+if ( markers ) {
+  let map;
+  let addMarker;
+
+  function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 37.776542, lng: -122.446379 },
+      zoom: 13
+    });
+
+    var geocoder = new google.maps.Geocoder();
+
+    markers.map( m => {
+      var marker = {};
+      var infowindow = new google.maps.InfoWindow({
+	content: `<strong>${m.name}</strong><br/>${m.address}<br />${m.href}`
+      });
+
+      // caching geocode for google api quotas...
+      if ( localStorage[ 'geocode-' + m.id ] ) {
+	marker = new google.maps.Marker({
+	  position: JSON.parse(localStorage[ 'geocode-' + m.id ] ),
+	  title: m.name,
+	  map: map
+	});
+	marker.addListener('click', function() { infowindow.open(map, marker); });
+      } else {
+	geocoder.geocode({ 'address': m.address }, function (results, status) {
+	  if (status == 'OK') {
+	    marker = new google.maps.Marker({
+	      position: results[0].geometry.location,
+	      title: m.name,
+	      map: map
+	    });
+
+	    localStorage.setItem( 'geocode-' + m.id, JSON.stringify(results[0].geometry.location) );
+
+	    marker.addListener('click', function() { infowindow.open(map, marker); });
+	  } else {
+	    alert('Geocode was not successful for the following reason: ' + status);
+	  }
+	});
+      }
+    } );
+  }
+}
+</script>

@@ -1,0 +1,46 @@
+<h1>Hello <%= @user.login %></h1>
+
+<% if current_user && @user.login == current_user.login
+     currentBorrowings = []
+     returnsBorrowings = []
+     current_user.borrowings.each do |borrowing|
+       if !borrowing.returned 
+         currentBorrowings.push( borrowing )
+       else
+         returnsBorrowings.push( borrowing )
+       end
+     end
+   %>
+
+ <% if currentBorrowings.length %>
+   <h3>Current borrowings</h3>
+
+   <p>Click on the book title to access the 'Returns the book' button.</p>
+   <div class="row row-header">
+     <div class="col-md-8">Book</div>
+     <div class="col-md-4">Status</div>
+   </div>
+   <% currentBorrowings.each do |borrowing| %>
+     <% late = ( ( borrowing.returns.at_midnight - DateTime.now.at_midnight ) / ( 60 * 60 * 24) ).to_i %>
+     <div class="row <%= late < 0 ? 'row-late' : 'row-ontime' %>">
+       <div class="col-md-8"><%= link_to borrowing.book.title, book_path(borrowing.book) %></div>
+       <div class="col-md-4"><%= late %> day(s) <%= late < 0 ? 'late' : 'left' %></div>
+     </div>
+   <% end %>
+ <% end %>
+
+ <% if returnsBorrowings.length %>
+   <h3>History</h3>
+   <div class="row row-header">
+     <div class="col-md-8">Book</div>
+     <div class="col-md-4">Returned on</div>
+   </div>
+   <% returnsBorrowings.each do |borrowing| %>
+     <div class="row">
+       <div class="col-md-8"><%= link_to borrowing.book.title, book_path(borrowing.book) %></div>
+       <div class="col-md-4"><%= borrowing.returned.to_time.strftime('%B %e at %l:%M %p') %></div>
+     </div>
+   <% end %>
+ <%end%>
+  <%end%>
+

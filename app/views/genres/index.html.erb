@@ -1,0 +1,16 @@
+<h1>Genres</h1>
+
+<div class="row row-header">
+  <div class="col-md-10">Title</div>
+  <div class="col-md-2">Books</div>
+</div>
+
+
+<% @genres.each do |genre| %>
+
+  <div class="row">
+    <div class="col-md-10"><%= link_to genre.title, genre_path(genre) %></div>
+    <div class="col-md-2"><%= genre.books.length %></div>
+  </div>
+
+<% end %>

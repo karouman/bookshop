@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookshop</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<!--  CUSTOM CSS - TODO: move to LESS in a separated file --!>
+  <style type="text/css">
+
+    .header { border-bottom:1px solid #CECECE;padding:30px 10px; }
+    .footer { border-top:1px solid #CECECE; padding:30px 10px; text-align: right;margin-top:20px; }
+
+    .header-logo-link {font-size:2em}
+    .header-logo-link a {color:#666;text-decoration:none;}
+    .header-logo-link a:hover {background-color:#fff;font-style:italic}
+
+    .user-profile {font-size:1.3em;line-height:2em;text-align:right;}
+    .user-profile a {background-color:#FFF;}
+    .user-profile a:hover {background-color:#fff;text-decoration:underline}
+
+
+    button a { color: #000;
+      text-decoration: none;
+    }
+    button a:hover { color: #000;
+      text-decoration: none;
+    }
+    button a:visited { color: #000;
+      text-decoration: none;
+    }
+    button.btn-primary a { color: #fff }
+
+    kbd a { color: #FFF }
+    kbd a:hover { color: #FFF; text-decoration: none; }
+
+    .row-header { font-weight: bold; border-bottom:1px solid #CECECE; padding: 0px 0px 2px 0px}
+    .row-late { background-color:#FEE; font-weight:bold }
+    .row-ontime { background-color:#EEF }
+
+    .empty-block { border: solid 1px #CECECE; color:#888; text-align:center; padding:80px; background-color:#F1f1f1;font-size:1.4em }
+  </style>
+  </head>
+
+  <body>
+    <div class="container header">
+      <div class="raw">
+        <div class="col-md-4">
+          <div class="header-logo-link">
+            <%= link_to 'BookShop', welcome_index_path %>
+          </div>
+        </div>
+        <div class="col-md-8 text-righ">
+          <%= render "shared/user" %>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <%= yield %>
+    </div>
+    <div class="container footer">
+      A little training by <a href="https://github.com/karouman" target="blank">Karouman</a>
+      proudly powered by <a href="https://rubyonrails.org/" target="_blank">rails</a>
+    </div>
+  </body>
+</html>

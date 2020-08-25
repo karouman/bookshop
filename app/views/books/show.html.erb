@@ -1,0 +1,45 @@
+<h1>Book: <%= @book.title %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+    <blockquote>
+      <%= @book.abstract %>
+    </blockquote>
+    <br/>
+    <p>This book is availlable at <%= @book.library.name %>, view all other books availlable in this library: 
+      <%= link_to "Back to " + @book.library.name, library_path( @book.library ) %>
+    </p>
+  </div>
+  <div class="col-md-4">
+    <b>Genres :</b><br/>
+    <% @book.genres.each do |genre| %>
+      <kbd><%=  link_to genre.title, genre_path(genre) %></kbd>
+    <% end %>
+    <% if !@book.borrowingSummary.available %>
+      <% if current_user && @book.borrowingSummary.borrower == current_user.login %>
+        <h4>Hello <%= current_user.login %>, have you finished reading ?</h4>
+        <b>Hope you enjoyed it.</b>
+        <%= form_with :url => return_book_path do |f| %>
+          <%= f.submit 'Return the book', { class: 'btn btn-primary' }%>
+        <% end %>
+
+      <% else %>
+      <h4>This book is out !</h4>
+      <%= @book.borrowingSummary.borrower.capitalize %> is already borrowed this book. It should be back at the library soon.
+      <br/><br/>Returns scheduled on: <%= @book.borrowingSummary.returns.to_time.strftime('%B %e at %l:%M %p') %>.
+      <% end %>
+    <% else %>
+      <% if @book.borrowingSummary.count == 0 %>
+        <h4>Be the first to borrow this book !</h4>
+      <% else %>
+        <h4>This book has been borrowed <%= @book.borrowingSummary.count %> times</h4>
+      <% end %>
+      <p>Select a duration then click the button below to start borrowing this book.</p>
+      <%= form_with :url => borrow_book_path do |f| %>
+        <%= select_tag(:duration, options_for_select([['One week', 7], ['Two weeks', 14]])) %>
+        <%= f.submit 'Borrow from now', { class: 'btn btn-primary' }%>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+

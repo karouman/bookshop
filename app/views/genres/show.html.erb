@@ -1,0 +1,27 @@
+<h1><%= @genre.title %></h1>
+<blockquote>
+  <%= @genre.description %>
+</blockquote>
+
+
+<h3>All books for "<%= @genre.title %>"</h3>
+<% @genre.books.each do |book| %>
+  <div class="row">
+    <div class="col-md-8"><%= link_to book.title, book_path(book) %>
+  </div>
+  <div class="col-md-4">
+    <% book.genres.each do |genre| %>
+      <% if @genre.id != genre.id %>
+        <kbd><%=  link_to genre.title, genre_path(genre) %></kbd>
+      <%end%>
+    <% end %>
+  </div>
+  </div>
+<% end %>
+
+<hr />
+<div class="row text-left">
+  <button type="button" class="btn btn-default">
+    <%= link_to 'Back to all genres', genres_path %>
+  </button>
+</div>

@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  book: one
+  returns: 2020-08-24 11:10:20
+
+two:
+  user: two
+  book: two
+  returns: 2020-08-24 11:10:20
