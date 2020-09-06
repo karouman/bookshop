@@ -19,7 +19,7 @@
       <% if current_user && @book.borrowingSummary.borrower == current_user.login %>
         <h4>Hello <%= current_user.login %>, have you finished reading ?</h4>
         <b>Hope you enjoyed it.</b>
-        <%= form_with :url => return_book_path do |f| %>
+        <%= form_with :url => pass_back_book_path do |f| %>
           <%= f.submit 'Return the book', { class: 'btn btn-primary' }%>
         <% end %>
 

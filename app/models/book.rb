@@ -3,6 +3,40 @@ class Book < ApplicationRecord
   belongs_to :library
   has_many :borrowings
 
+  # return a book
+  def pass_back( current_user )
+    self.borrowings.each do |borrowing|
+      if self.borrowingSummary.available
+        return false
+      else
+        if !borrowing.returned && borrowing.user == current_user
+          borrowing.returned = DateTime.now
+          if borrowing.save()
+            return true
+          else
+            return false
+          end
+        end
+      end
+    end
+    return false
+  end
+
+  def borrow( current_user, duration )
+    if self.borrowingSummary.available
+      if Borrowing.create(
+          user: current_user,
+          book: self,
+          returns: DateTime.now() + duration )
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+
   def borrowingSummary
     self.borrowings.each do |borrowing|
       if !borrowing.returned

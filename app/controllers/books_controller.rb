@@ -14,19 +14,15 @@ class BooksController < ApplicationController
     if ( !current_user )
       redirect_to login_path
     else
-      Borrowing.create( user: current_user, book: @book, returns: DateTime.now() + params[:duration].to_i )
+      @book.borrow( current_user, params[:duration].to_i )
       redirect_to @book
     end
   end
 
-  def return
+  def pass_back
+    #TODO: optimize sql select
     @book = Book.find(params[:id])
-    @book.borrowings.each do |borrowing|
-      if !borrowing.returned && borrowing.user == current_user
-	borrowing.returned = DateTime.now
-	borrowing.save()
-      end
-    end
+    @book.pass_back( current_user )
     redirect_to @book
   end
 

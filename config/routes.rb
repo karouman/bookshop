@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :books do
     member do
       post 'borrow'
-      post 'return'
+      post 'pass_back'
     end
   end
 
